@@ -117,7 +117,7 @@ function storeDatainRedisServer(jwtResult, callback) {
     console.log("Redis Server...");
     var testredisData = {
         "accessToken": jwtResult.accessToken,
-        "Permission": ["Update", "get all school record"].toString()
+        "Permission": ["Update", "get all school record", 'search schools', 'get school by id'].toString()
     }
     console.log("Redis Server 0...");
     jwtResult.organization.forEach(function (Obj) {

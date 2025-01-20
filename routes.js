@@ -15,6 +15,9 @@ module.exports = function (router) {
     var school = require('./controller/school.controller')
     router.post('/create/school', school.CreateSchool);
     router.get('/getAllSchool', permission('get all school record'), school.getAllSchool);
+    router.get('/searchSchools', permission('search schools'), school.searchSchoolsByName);
+    router.get('/school/:schoolId', permission('get school by id'), school.getSchoolById);
+
 
     router.get('/getRedisData', school.getRedisServerData);
 }

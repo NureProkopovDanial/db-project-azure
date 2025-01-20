@@ -29,6 +29,46 @@ module.exports.getAllSchool = function (req, res, next) {
     });
 }
 
+module.exports.searchSchoolsByName = function (req, res, next) {
+    const School = DBConnectionsList[jwt.jwtverify(req)].studentModel;
+    const keyword = req.query.keyword;
+
+    if (!keyword) {
+        return res.status(400).send("Keyword is required for search.");
+    }
+
+    School.find({ "SchoolName": { "$regex": keyword, "$options": "i" } }, function (err, schools) {
+        if (err) {
+            return res.status(402).send(err);
+        }
+        if (schools) {
+            return res.status(200).send(schools);
+        } else {
+            return res.status(404).send("No schools found.");
+        }
+    });
+};
+
+module.exports.getSchoolById = function (req, res, next) {
+    const School = DBConnectionsList[jwt.jwtverify(req)].studentModel;
+    const schoolId = req.params.schoolId;
+
+    if (!schoolId) {
+        return res.status(400).send("SchoolId is required.");
+    }
+
+    School.findOne({ "SchoolId": schoolId }, function (err, school) {
+        if (err) {
+            return res.status(402).send(err);
+        }
+        if (school) {
+            return res.status(200).send(school);
+        } else {
+            return res.status(404).send("School not found.");
+        }
+    });
+};
+
 module.exports.getRedisServerData = function (req, res, next) {
     let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyTmFtZSI6IkFydWwiLCJDTmFtZSI6IkRCMSIsIlBlcm1pc3Npb24iOlsidXBkYXRlIiwiZ2V0IGFsbCBzY2hvb2wgcmVjb3JkIiwiZGVsZXRlIl0sImlhdCI6MTUzNzI1OTQ4MywiaXNzIjoiS2VvIHBsdXMgTE1TIn0.N75JL4YEKEMZrZvSGdnSiAQpm_2G6VPRDyUVlAKTTog";
     redisClient.get(token, function (err, reply) {

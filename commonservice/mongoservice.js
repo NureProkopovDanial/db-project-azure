@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
     Admin = mongoose.mongo.Admin;
 
 var dataBaseSchema = require('../models/school.model');
+var config = require('../config.js')
 
 /**
  * 1. Connect local Mongo server and get all Database 

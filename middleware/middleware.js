@@ -1,3 +1,4 @@
+//middleware.js
 var mongoose = require('mongoose');
 var dataBaseSchema = require('../models/school.model');
 var jwt = require('jsonwebtoken');

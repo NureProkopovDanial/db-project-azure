@@ -1,3 +1,4 @@
+//server.js
 var express = require('express')
 var app = express()
 const mongoose = require('mongoose');
@@ -6,7 +7,7 @@ var router = express.Router();
 var dynamicDB = require('./middleware/middleware');
 var passportconfig = require('./commonservice/googleoauth.service');
 var redis = require("redis");
-var config = require('./config');
+var config = require('./config.js');
 
 var redisURI = 'redis://' + config.redisDB.USERNAME + '@' + config.redisDB.DBHOST + ':' + config.redisDB.DBPORT;
 var redisClient = redis.createClient(redisURI);

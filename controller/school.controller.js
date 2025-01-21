@@ -1,3 +1,4 @@
+//school.controller.js
 'use strict';
 var jwt = require('../commonservice/jwtverify');
 /**

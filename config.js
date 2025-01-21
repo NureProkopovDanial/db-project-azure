@@ -1,3 +1,4 @@
+//config.js
 'use strict';
 var configObject = new Object();
 configObject.issuer = "Keo plus LMS",

@@ -1,3 +1,4 @@
+//user.controller.js
 'use strict';
 var mongoose = require('mongoose');
 require('../models/user.model');

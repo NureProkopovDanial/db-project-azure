@@ -1,3 +1,4 @@
+//user.model.js
 'use strict';
 var mongoose = require('mongoose');
 var UserSchema = mongoose.Schema;

@@ -1,3 +1,4 @@
+//school.model.js
 'use strict';
 var mongoose = require('mongoose');
 var SchoolSchema = mongoose.Schema;

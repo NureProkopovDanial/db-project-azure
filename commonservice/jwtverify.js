@@ -1,3 +1,4 @@
+//jwtverify.js
 var jwt = require('jsonwebtoken');
 var config = require('../config.js');
 

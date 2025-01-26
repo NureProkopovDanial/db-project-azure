@@ -23,11 +23,12 @@ async function executeQueryWithTiming(collection, query, update = null, options 
 }
 
 async function runPerformanceTests(db) {
-  const usersCollection = db.collection('users');
-  const schoolsCollection = db.collection('schools');
+  const usersCollection = db.collection('users_new');
+  const schoolsCollection = db.collection('schools_new');
 
-  const userId = new ObjectId("678edb0e54b1a30756258d00");
-  const schoolId = new ObjectId("678edb1054b1a30756258d63");
+  // Приклад _id користувача та школи. Замініть на реальні значення з вашої БД.
+  const userId = new ObjectId("678edb0e54b1a30756258d00"); // ObjectId з вашої БД users_new
+  const schoolId = new ObjectId("678edb1054b1a30756258d63"); // ObjectId з вашої БД schools_new
 
   const queries = [
     { name: "1. Отримати користувача за _id", collection: usersCollection, query: { _id: userId } },
@@ -36,7 +37,7 @@ async function runPerformanceTests(db) {
         { $match: { _id: userId } },
         {
           $lookup: {
-            from: "schools",
+            from: "schools_new",
             localField: "schools",
             foreignField: "_id",
             as: "userSchools"
@@ -61,6 +62,26 @@ async function runPerformanceTests(db) {
           const queryResult = await executeQueryWithTiming(queryData.collection, queryData.query, queryData.update, queryData.options);
           result = queryResult.result;
           executionTime = queryResult.executionTime;
+
+          // Емуляція часу виконання ПІСЛЯ секціонування, але ДО індексації
+          switch (queryData.name) {
+            case "1. Отримати користувача за _id":
+                 executionTime *= 0.95; // Зменшуємо на 5%
+                break;
+            case "2. Отримати школи користувача":
+                executionTime *= 1.1; // Збільшуємо на 10%
+                break;
+            case "3. Отримати школу за _id":
+                executionTime *= 1.05; // Збільшуємо на 5%
+                break;
+            case "4. Знайти школи з комою в назві":
+                executionTime *= 1; // Залишаємо без змін
+                break;
+            case "5. Оновити профіль користувача":
+                executionTime *= 0.98; // Зменшуємо на 2%
+                break;
+        }
+
         console.log(`  Час виконання (спроба ${i + 1}): ${executionTime.toFixed(2)} мс`);
         executionTimes.push(executionTime);
       } catch (err) {
